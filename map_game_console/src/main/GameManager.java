@@ -1,0 +1,137 @@
+package main;
+
+import tools.Factory;
+import tools.Input;
+import tools.MoveChar;
+import tools.MoveCharImpl;
+import tools.Output;
+import tools.SettingUtil;
+import tools.Utility;
+
+public class GameManager {
+	public final int YSIZE;
+	public final int XSIZE;
+	public final char[][] map;
+	public int numMonsters = 0;
+	private int defeatedMonsters = 0;
+	public MoveChar moveChar;
+	public boolean isEnd = false;
+	public final Output out;
+	public final Input in;
+	
+	public GameManager(int ysize, int xsize, Input in, Output out) {
+		this.YSIZE = ysize;
+		this.XSIZE = xsize;
+		this.map = new char[YSIZE][XSIZE];
+		initMap();
+		this.out = out;
+		this.in = in;
+	}
+	
+	public void initMap() {
+		for (int y = 0; y < YSIZE; y++) {
+			for (int x = 0; x < XSIZE; x++) {
+				this.map[y][x] = '.';
+			}
+		}
+	}
+	
+	public void setMoveChar(MoveChar moveChar) {
+		this.moveChar = moveChar;
+	}
+
+	private void setPosition(char ch) {
+		int y, x;
+		do {
+			y = Utility.RND.nextInt(YSIZE);
+			x = Utility.RND.nextInt(XSIZE);
+		} while(map[y][x] != '.');
+		map[y][x] = ch;
+	}
+	
+	public void setMonster(char ch) {
+		setPosition(ch);
+		numMonsters++;
+	}
+	
+	public void setItem(char ch) {
+		this.setPosition(ch);
+	}
+
+	public void printMap(Player player) {
+		System.out.println();
+		for (int y = 0; y < YSIZE; y++) {
+			for (int x = 0; x < XSIZE; x++) {
+				out.print('|');
+				if (player.py == y && player.px == x) {
+					out.print('@');
+				} else {
+					out.print(map[y][x]);
+				}
+			}
+			out.println("|");
+		}
+		
+	}
+	
+	public void attackAndReturn(Player p, Monster m) {
+		p.attack(m);
+		if (m.hp <= 0) {
+			out.println(p.name + "は" + m.name + "を倒した!");
+			this.defeatedMonsters++;
+			this.map[p.py][p.px] = '.';
+		} else {
+			m.attack(p);
+			if (p.hp <= 0) {
+				out.println(m.name + "は" + p.name + "を倒した!");
+				isEnd = true;
+			}
+		}
+	}
+	
+	public void battleInfo(Player p, Monster m) {
+		out.println("\n" + p.name + " HP:" + p.hp + " " + m.name + " HP:" + m.hp);
+	}
+	
+	public void battle(Player p) {
+		char ch = this.map[p.py][p.px];
+		Monster m = Factory.createMonster(ch);
+		if (m == null) return;
+		out.println(m.name + "が現れた!");
+		while (m.hp > 0 && p.hp > 0) {
+			char ch2 = in.nextChar("a:攻撃 e:逃げる > ");
+			if (ch2 == 'a') {
+				attackAndReturn(p, m);
+			} else if (ch2 == 'e') {
+				out.println(p.name + "は逃げた!");
+				break;
+			}
+			battleInfo(p, m);
+		}	
+	}
+	
+	public boolean isCheckDefeated() {
+		return this.defeatedMonsters >= this.numMonsters;
+	}
+	
+	public void gameOver(Player p) {
+		if (p.hp <= 0) {
+			out.println(p.name + "は倒れた！");
+		} else if (isCheckDefeated()) {
+			out.println(p.name + "は" + this.defeatedMonsters + "匹のモンスターを倒した!");
+			out.println(p.name + "は勝利した!");
+		}
+		String msg = """
+				======================
+				|     GAME OVER      |
+				======================
+				""";
+		out.println(msg);
+		char ch = in.nextChar("設定を確認しますか? (y/n) > ");
+		if (ch == 'y') {
+			SettingUtil settingUtil = new SettingUtil(this);
+			settingUtil.execute();
+		}
+		out.println("終了します");
+	}
+}
