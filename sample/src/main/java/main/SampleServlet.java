@@ -1,24 +1,24 @@
-package servlet;
+package main;
 
 import java.io.IOException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import main.GameManager;
-
-@WebServlet("/GameServlet")
-public class GameServlet extends HttpServlet {
+@WebServlet("/SampleServlet")
+public class SampleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		GameManager gm = new GameManager(5, 5);
-		request.setAttribute("gm", gm);
-		String url = "WEB-INF/jsp/game.jsp";
-		request.getRequestDispatcher(url).forward(request, response);
+		String url = "sample.jsp";
+		RequestDispatcher d =
+				request.getRequestDispatcher(url);
+		d.forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
