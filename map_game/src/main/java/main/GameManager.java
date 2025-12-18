@@ -6,8 +6,8 @@ public class GameManager {
 	private char[][] map;
 	
 	public GameManager(int ysize, int xsize) {
-		ysize = ysize;
-		xsize = xsize;
+		this.ysize = ysize;
+		this.xsize = xsize;
 		this.map = new char[ysize][xsize];
 		initMap();
 	}
