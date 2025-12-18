@@ -1,0 +1,15 @@
+動的webプロジェクト: kazuate
+index.jsp
+  1～9までの数を入力して送信(post)
+  name="user"
+
+@("GetNumber")
+GetNumberサーブレット
+  int num = ランダム1..9
+  String userTxt で受け取る("user")
+  int user にキャスト(Integer.parseInt)
+  
+  正解です。
+  大きすぎます。
+  小さすぎます。
+  
