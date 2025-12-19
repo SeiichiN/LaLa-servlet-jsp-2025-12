@@ -17,7 +17,8 @@
 			<option value="suport">アフターサポートについて</option>
 		</select><br>
 		お問い合わせ内容：<br>
-		<textarea rows="6" cols="40" name="body"></textarea>
+		<textarea rows="6" cols="40" name="body"></textarea><br>
+		<input type="submit" value="送信">
 	</form>
 </body>
 </html>
