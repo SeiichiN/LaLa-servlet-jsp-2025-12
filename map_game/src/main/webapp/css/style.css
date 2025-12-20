@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+body, h1, h2, h3, p, ul {
+	margin: 0;
+}
+
+ul {
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+header {
+	background-color: #f8f8f8;
+	margin-bottom: 20px;
+	padding: 10px 0;
+}
+
+header h1 {
+	width: 800px;
+	margin: 0 auto;
+}
+
+header h1 a:hover {
+	text-decoration: none;
+}
+
+.container {
+	width: 800px;
+	margin: 0 auto 50px;
+	display: flex;
+	justify-content: space-between;
+}
+
+footer {
+	background-color: #f8f8f8;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 12px;
+}
+
+/*
+ * マップのスタイル
+ */
+table {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+}
+
+th, td {
+	width: 16px;
+	height: 16px;
+	border: 1px solid #ccc;
+	padding: 5px 8px;
+}
+
+/*
+ * moveボタン
+ */
+.move-area {
+  width: 80px;
+}
+
+.up-btn {
+  text-align: center;
+}
+
+.left-right-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.down-btn {
+  text-align: center;
+}
+
+/* 修正時刻: Sat 2025/12/20 18:52:11 */
