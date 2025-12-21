@@ -118,20 +118,22 @@ public class Player {
 			return;
 		}
 		for (int i = 0; i < items.size(); i++) {
-			gm.getOut().print(i + 1 + ":" + items.get(i).getName() + " ");
+			gm.getOut().print("<input type=\"radio\" name=\"item\" value=\"" + items.get(i).getSuffix() + "\">" + items.get(i).getName());
 		}
 		
 	}
 	
 	public Item selectItem() {
 		printItems();
-		int index = 0;
+		int index = 1;
+		gm.getIn().nextChar("選択>");
+		/*
 		while (true) {
-			gm.getIn().nextChar("選択>");
 			char ch = 1;
 			index = ch - '0';
 			if (index >= 1 && index <= items.size()) break;			
 		}
+		*/
 		Item item = items.get(index - 1);
 		return item;
 	}
