@@ -32,7 +32,14 @@
 			</table>
 		</section>
 		<section class="info-area">
-			<p><c:out value="${message}" /></p>
+			<section class="message-area">
+				<p>${message}</p>
+			</section>
+			<section class="select-area">
+				<p>${selectMessage}</p>
+				<form action="select" method="post">
+				</form>	
+			</section>
 		</section>
 		<section class="control-area">
 			<div class="action-area">

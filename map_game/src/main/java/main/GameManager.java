@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import tools.BrowserOutput;
 import tools.Factory;
+import tools.Input;
 import tools.Output;
 import tools.Utility;
 
@@ -14,12 +15,15 @@ public class GameManager implements Serializable {
 	private char[][] map;
 	private int numMonsters = 0;
 	private boolean isEnd = false;
+	private int defeatedMonsters = 0;
 	private Output out;
+	private Input in;
 	
 	public GameManager() { }
 	
-	public GameManager(int ysize, int xsize, Output out) {
+	public GameManager(int ysize, int xsize, Output out, Input in) {
 		this.out = out;
+		this.in = in;
 		this.ysize = ysize;
 		this.xsize = xsize;
 		this.map = new char[ysize][xsize];
@@ -88,17 +92,40 @@ public class GameManager implements Serializable {
 		char ch = this.map[p.getPy()][p.getPx()];
 		Monster m = Factory.createMonster(ch);
 		if (m == null) return;
-		out.print(m.name + "が現れた!");
+		out.print(m.getName() + "が現れた！");
 		while (m.getHp() > 0 && p.getHp() > 0) {
-			char ch2 = in.nextChar("a:攻撃 e:逃げる > ");
+			char ch2 = this.getIn().nextChar("a:攻撃 e:逃げる > ");
 			if (ch2 == 'a') {
 				attackAndReturn(p, m);
 			} else if (ch2 == 'e') {
-				out.println(p.name + "は逃げた!");
+				out.print(p.getName() + "は逃げた!");
 				break;
 			}
 			battleInfo(p, m);
 		}	
+	}
+
+	public void attackAndReturn(Player p, Monster m) {
+		p.attack(m);
+		if (m.getHp() <= 0) {
+			out.print(p.getName() + "は" + m.getName() + "を倒した!");
+			this.defeatedMonsters++;
+			this.map[p.getPy()][p.getPx()] = '.';
+		} else {
+			m.attack(p);
+			if (p.getHp() <= 0) {
+				out.print(m.getName() + "は" + p.getName() + "を倒した!");
+				isEnd = true;
+			}
+		}
+	}
+
+	public void battleInfo(Player p, Monster m) {
+		out.print( p.getName() + " HP:" + p.getHp() + " " + m.getName() + " HP:" + m.getHp());
+	}
+
+	public Input getIn() {
+		return in;
 	}
 
 }

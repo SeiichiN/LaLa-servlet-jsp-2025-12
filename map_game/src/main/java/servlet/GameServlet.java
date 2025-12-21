@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import main.GameManager;
 import main.Player;
+import tools.BrowserInput;
 import tools.BrowserOutput;
 
 @WebServlet(urlPatterns = {"/startGame", "/move", "/action"})
@@ -25,7 +26,7 @@ public class GameServlet extends HttpServlet {
 	}
 	
 	private void startGame(HttpServletRequest request, HttpServletResponse response) {
-		GameManager gm = new GameManager(5, 5, new BrowserOutput());
+		GameManager gm = new GameManager(5, 5, new BrowserOutput(), new BrowserInput());
 		gm.setMonster('s');
 		gm.setMonster('g');
 		gm.setItem('p');
@@ -66,10 +67,11 @@ public class GameServlet extends HttpServlet {
 		Player player = (Player) session.getAttribute("player");
 		String action = request.getParameter("action");
 		switch (action) {
-		case "battle" -> player.battle();
+		case "battle" -> player.getGm().battle(player);
 		case "take" -> player.take();
 		case "use" -> player.use();
 		}
+		player.look();
 	}
 
 }

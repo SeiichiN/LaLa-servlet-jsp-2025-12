@@ -1,7 +1,7 @@
 package main;
 
 public class Potion extends Item {
-	public int recoveryHp = 100;
+	private int recoveryHp = 100;
 	
 	public Potion() {
 		this('p', "ポーション");
@@ -9,6 +9,10 @@ public class Potion extends Item {
 	
 	public Potion(char suffix, String name) {
 		super(suffix, name);
+	}
+
+	public int getRecoveryHp() {
+		return recoveryHp;
 	}
 
 }

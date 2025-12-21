@@ -5,7 +5,7 @@ public class BrowserOutput implements Output {
 	
 	@Override
 	public void print(String s) {
-		sb.append(s);
+		sb.append(s + "<br>");
 	}
 	
 	public String toString() {

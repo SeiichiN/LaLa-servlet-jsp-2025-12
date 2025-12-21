@@ -31,6 +31,7 @@ public class Player {
 		px = Utility.RND.nextInt(gm.getXsize());
 	}
 	
+	/*
 	public void command() {
 		char ch = gm.in.nextChar("wsad:移動 b:戦う t:取る u:使う i:情報 q:終了 > ");
 		switch (ch) {
@@ -45,6 +46,7 @@ public class Player {
 			case 'q' -> this.setEndTrue();
 		}
 	}
+	*/
 	
 	private void hpRecoveryUp() {
 		hp = Math.min(MAX_HP, hp + HP_RECOVERY_PER_MOVE);
@@ -81,10 +83,10 @@ public class Player {
 	
 	public void attack(Monster m) {
 		if (this.hp <= 0) return;
-		gm.getOut().print("\n" + name + "は" + m.name + "を攻撃した!");
+		gm.getOut().print("\n" + name + "は" + m.getName() + "を攻撃した!");
 		int damage = Utility.RND.nextInt(30);
-		m.hp -= damage;
-		gm.getOut().print(m.name + "は" + damage + "のダメージを受けた!");
+		m.setHp(m.getHp() - damage); 
+		gm.getOut().print(m.getName() + "は" + damage + "のダメージを受けた!");
 	}
 	
 	public void look() {
@@ -103,9 +105,10 @@ public class Player {
 		char ch = gm.getMap()[py][px];
 		Item item = Factory.createItem(ch);
 		if (item == null) return;
-		gm.getOut().print(this.name + "は" + item.name + "を手に入れた!");
+		gm.getOut().print(this.getName() + "は" + item.getName() + "を手に入れた!");
 		this.items.add(item);
 		gm.getMap()[py][px] = '.';
+		System.out.println(item.getName() + "を手に入れた!");
 	}
 	
 	public void printItems() {
@@ -115,7 +118,7 @@ public class Player {
 			return;
 		}
 		for (int i = 0; i < items.size(); i++) {
-			gm.getOut().print(i + 1 + ":" + items.get(i).name + " ");
+			gm.getOut().print(i + 1 + ":" + items.get(i).getName() + " ");
 		}
 		
 	}
@@ -124,7 +127,8 @@ public class Player {
 		printItems();
 		int index = 0;
 		while (true) {
-			char ch = gm.in.nextChar("選択>");
+			gm.getIn().nextChar("選択>");
+			char ch = 1;
 			index = ch - '0';
 			if (index >= 1 && index <= items.size()) break;			
 		}
@@ -136,7 +140,7 @@ public class Player {
 		int nowHP = this.hp;
 		if (item instanceof Potion) {
 			Potion p = (Potion) item;
-			this.hp = Math.min(this.hp + p.recoveryHp, this.MAX_HP);
+			this.hp = Math.min(this.hp + p.getRecoveryHp(), this.MAX_HP);
 			gm.getOut().print("HPが" + (this.hp - nowHP) + "回復した!");
 			items.remove(item);
 		}
@@ -148,8 +152,8 @@ public class Player {
 			return;
 		}
 		Item item = selectItem();
-		gm.getOut().print(this.name + "は" + item.name + "を使った!");
-		switch (item.suffix) {
+		gm.getOut().print(this.name + "は" + item.getName() + "を使った!");
+		switch (item.getSuffix()) {
 		case 'p' -> usePotion(item);
 		}
 	}

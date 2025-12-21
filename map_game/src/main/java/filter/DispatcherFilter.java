@@ -14,7 +14,7 @@ import main.GameManager;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/startGame", "/move"})
+@WebFilter(urlPatterns = {"/startGame", "/move", "/action"})
 public class DispatcherFilter extends HttpFilter implements Filter {
        
 	private static final long serialVersionUID = 1L;
@@ -32,6 +32,9 @@ public class DispatcherFilter extends HttpFilter implements Filter {
 		String message = gm.getOut().toString();
 		request.setAttribute("message", message);
 		gm.getOut().clear();
+		String selectMessage = gm.getIn().toString();
+		request.setAttribute("selectMessage", selectMessage);
+		gm.getIn().clear();	
 		String url = "WEB-INF/jsp/game.jsp";
 		request.getRequestDispatcher(url).forward(request, response);
 		
