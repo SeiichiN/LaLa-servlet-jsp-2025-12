@@ -4,11 +4,15 @@ import java.io.Serializable;
 
 public class Kazu implements Serializable {
 	private int kotae;
-	private int num;
+	private int user;
 	private String result;
 	
-	public Kazu() { }
-	
+	public Kazu () {}
+	public Kazu(int kotae, int user) {
+		this.kotae = kotae;
+		this.user = user;
+	}
+
 	public int getKotae() {
 		return kotae;
 	}
@@ -17,12 +21,12 @@ public class Kazu implements Serializable {
 		this.kotae = kotae;
 	}
 
-	public int getNum() {
-		return num;
+	public int getUser() {
+		return user;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setUser(int user) {
+		this.user = user;
 	}
 
 	public String getResult() {

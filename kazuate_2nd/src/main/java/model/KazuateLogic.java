@@ -2,11 +2,9 @@ package model;
 
 public class KazuateLogic {
 	public void execute(Kazu kazu) {
-		int num = kazu.getNum();
-		int kotae = kazu.getKotae();
-		if (num == kotae) {
+		if (kazu.getKotae() == kazu.getUser()) {
 			kazu.setResult("正解です");
-		} else if (num > kotae) {
+		} else if (kazu.getKotae() < kazu.getUser()) {
 			kazu.setResult("大きすぎます");
 		} else {
 			kazu.setResult("小さすぎます");
