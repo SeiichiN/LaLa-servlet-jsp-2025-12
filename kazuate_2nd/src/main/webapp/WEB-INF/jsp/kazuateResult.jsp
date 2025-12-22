@@ -12,7 +12,7 @@ Kazu kazu = (Kazu) request.getAttribute("kazu");
 </head>
 <body>
 	<h1>結果</h1>
-	<p>あなたの数字：<%= kazu.getNum() %></p>
+	<p>あなたの数字：<%= kazu.getUser() %></p>
 	<p><%= kazu.getResult() %></p>
 	<p><a href="kazuate.jsp">もう一回</a></p>
 </body>
