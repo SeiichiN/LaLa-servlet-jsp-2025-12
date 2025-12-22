@@ -30,6 +30,7 @@ public class GameController extends HttpServlet {
 		int user = Integer.parseInt(request.getParameter("user"));
 		HttpSession session = request.getSession();
 		Kazu kazu = (Kazu) session.getAttribute("kazu");
+		System.out.println(kazu.getKotae());
 		kazu.setUser(user);
 		KazuateLogic kazuateLogic = new KazuateLogic();
 		kazuateLogic.execute(kazu);
